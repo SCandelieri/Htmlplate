@@ -1,16 +1,22 @@
 ﻿(function ($) {
 	
-	$.fn.htmplate = function(templatePath, data) {
-		var htmlStr = getHtmlTemplate(templatePath);
-		htmlStr = parseHtml(htmlStr, data);
-		return this.html(htmlStr);
+	$.fn.htmplate = function (templatePath, data) {
+		var self = this;
+		getHtmlTemplate(templatePath, function (response) {
+			var htmlStr = parseHtml(response, data);
+			self.html(htmlStr);
+		});
+		return self;
 	}
 
-	//TODO: Implement function.
-	function getHtmlTemplate(templatePath) {
-		return '<h1>{{ nombre }}</h1><b>{{ edad }}</b><p>{{nombre}}</p>';
+	//TODO: Change AJAX call to allow cross site.
+	function getHtmlTemplate(templatePath, callbackFn) {
+		$.get(templatePath, function (response) {
+			callbackFn(response);
+		});
 	}
 
+	//TODO: Change function to allow more complex expressions.
 	function parseHtml(htmlStr, data) {
 		$.each(data, function (key, value) {
 			var regex = new RegExp('{{[ ]*' + key + '[ ]*}}', 'g');
