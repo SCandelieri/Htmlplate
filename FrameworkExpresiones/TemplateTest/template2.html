@@ -1,3 +1,3 @@
 ﻿<h3>{{ nombre }}</h3>
-<b>{{ precio }}</b>
-<p>{{ fechaVencimiento }}</p>
+<b>{{ precio | currency }}</b>
+<p>{{ fechaVencimiento | toDateStr }}</p>

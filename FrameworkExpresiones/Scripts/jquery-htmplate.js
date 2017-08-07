@@ -1,9 +1,9 @@
 ﻿(function ($) {
 	
-	$.fn.htmplate = function(templatePath, data) {
+	$.fn.htmplate = function(templatePath, data, functions) {
 		var self = this;
 		getHtmlTemplate(templatePath, function (response) {
-			var htmlStr = parseHtml(response, data);
+			var htmlStr = parseHtml(response, data, functions);
 			self.html(htmlStr);
 		});
 		return self;
@@ -16,13 +16,28 @@
 		});
 	}
 
-	//TODO: Change function to allow more complex expressions. Manage exceptions.
-	function parseHtml(htmlStr, data) {
-		$.each(data, function (key, value) {
-			var regex = new RegExp('{{[ ]*' + key + '[ ]*}}', 'g');
-			htmlStr = htmlStr.replace(regex, value);
+	//TODO: Manage exceptions.
+	function parseHtml(htmlStr, data, functions) {
+		return htmlStr.replace(/{{[^{}]*}}/g, function(match) {
+			var variableNames = getArrayFromExpression(match);
+			return evaluateExpression(variableNames, data, functions);
 		});
-		return htmlStr;
+	}
+
+	//TODO: Manage exceptions.
+	function getArrayFromExpression(expression) {
+		return expression.slice(2, expression.length - 2)
+						 .split("|")
+						 .map(function (variableName) { return variableName.trim(); });
+	}
+
+	//TODO: Manage exceptions.
+	function evaluateExpression(variableNames, data, functions) {
+		var variableName = variableNames[0];
+		var functionNames = variableNames.slice(1, variableNames.length);
+		return functionNames.reduce(function (acum, functionName) {
+			return functions[functionName](acum);
+		}, data[variableName]);
 	}
 
 })(jQuery);
