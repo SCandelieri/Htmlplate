@@ -1,13 +1,41 @@
 ﻿(function ($) {
-	
+
 	$.fn.htmplate = function(templatePath, data, functions) {
 		var self = this;
+		var funcs = $.extend({}, $.fn.htmplate.functions, functions);
 		getHtmlTemplate(templatePath, function(response) {
-			var htmlStr = parseHtml(response, data, functions);
+			var htmlStr = parseHtml(response, data, funcs);
 			self.html(htmlStr);
 		});
 		return self;
 	}
+
+	$.fn.htmplate.functions = {
+		toCurrency: function(number) {
+			return (typeof number === "number") ? "$" + number.toFixed(2).toString() : "";
+		},
+
+		toDateString: function(date) {
+			return (typeof date === "object" && Date.prototype.isPrototypeOf(date))
+				? date.toLocaleDateString() : "";
+		},
+
+		toJSON: function(obj) {
+			return JSON.stringify(obj);
+		},
+
+		toLowerCase: function (str) {
+			return (typeof str === "string") ? str.toLowerCase() : "";
+		},
+
+		toUpperCase: function(str) {
+			return (typeof str === "string") ? str.toUpperCase() : "";
+		},
+
+		toString: function (obj) {
+			return obj.toString();
+		}
+	};
 
 	//TODO: Change AJAX call to allow cross site. Manage exceptions.
 	function getHtmlTemplate(templatePath, callbackFn) {

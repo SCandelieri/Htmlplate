@@ -1,8 +1,5 @@
 ﻿$(document).ready(function () {
 	var functions = {
-		currency: function(number) { return "$" + number.toFixed(2).toString(); },
-		toDateStr: function(date) { return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear(); },
-		toString: function(obj) { return obj.toString(); },
 		mapDebts: function(debts) { return debts.map(function(debt) { return debt.precio; });}
 	};
 	$('span.content').htmplate('template.html', {
