@@ -1,4 +1,6 @@
-﻿(function ($) {
+﻿'use strict';
+
+(function ($, undefined) {
 
 	$.fn.htmplate = function(templatePath, data, functions) {
 		var self = this;
@@ -12,12 +14,12 @@
 
 	$.fn.htmplate.functions = {
 		toCurrency: function(number) {
-			return (typeof number === "number") ? "$" + number.toFixed(2).toString() : "";
+			return (typeof number === 'number') ? '$' + number.toFixed(2).toString() : '';
 		},
 
 		toDateString: function(date) {
-			return (typeof date === "object" && Date.prototype.isPrototypeOf(date))
-				? date.toLocaleDateString() : "";
+			return (typeof date === 'object' && Date.prototype.isPrototypeOf(date))
+				? date.toLocaleDateString() : '';
 		},
 
 		toJSON: function(obj) {
@@ -25,11 +27,11 @@
 		},
 
 		toLowerCase: function (str) {
-			return (typeof str === "string") ? str.toLowerCase() : "";
+			return (typeof str === 'string') ? str.toLowerCase() : '';
 		},
 
 		toUpperCase: function(str) {
-			return (typeof str === "string") ? str.toUpperCase() : "";
+			return (typeof str === 'string') ? str.toUpperCase() : '';
 		},
 
 		toString: function (obj) {
@@ -39,9 +41,7 @@
 
 	//TODO: Change AJAX call to allow cross site. Manage exceptions.
 	function getHtmlTemplate(templatePath, callbackFn) {
-		$.get(templatePath, function(response) {
-			callbackFn(response);
-		});
+		$.get(templatePath, callbackFn);
 	}
 
 	//TODO: Manage exceptions.
@@ -55,8 +55,8 @@
 	//TODO: Manage exceptions.
 	function getArrayFromExpression(expression) {
 		return expression.slice(2, expression.length - 2)
-						 .split("|")
-						 .map(function(variableName) { return variableName.trim(); });
+						.split('|')
+						.map(function(variableName) { return variableName.trim(); });
 	}
 
 	//TODO: Manage exceptions.
@@ -66,7 +66,7 @@
 		var expressionResult = functionNames.reduce(function(acum, functionName) {
 			return functions[functionName](acum);
 		}, data[variableName]);
-		return (!expressionResult) ? "" : expressionResult;
+		return (!expressionResult) ? '' : expressionResult;
 	}
 
 })(jQuery);

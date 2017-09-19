@@ -66,7 +66,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="htmplate-index.html" />
+    <Content Include="htmplate-test.js" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\htmplate.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">
@@ -78,8 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="App.js" />
-    <Content Include="index.html" />
+    <Content Include="jquery-htmplate-test.js" />
+    <Content Include="jquery-htmplate-index.html" />
     <Content Include="Scripts\jquery-htmplate.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
